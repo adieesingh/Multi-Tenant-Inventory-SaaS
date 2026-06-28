@@ -1,10 +1,11 @@
 import { CategoriesSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express";
+import { middleware } from "./middleware";
 
 export const categoriesRouter = express.Router();
 
-categoriesRouter.post("/", async (req, res) => {
+categoriesRouter.post("/",middleware, async (req, res) => {
   try {
     const categoriesPayLoad = CategoriesSchema.safeParse(req.body);
     if(!categoriesPayLoad.success){
@@ -15,7 +16,7 @@ categoriesRouter.post("/", async (req, res) => {
     await prismaClient.categories.create({
         data:{
             name:categoriesPayLoad.data.name,
-            organizationId:
+            organizationId:req.userId
         }
     })
   } catch (error) {

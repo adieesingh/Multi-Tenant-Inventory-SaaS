@@ -1,10 +1,11 @@
+import { middleware } from './middleware';
 import { UserSchmea } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express";
 
 export const userRouter = express.Router();
 
-userRouter.post("/",async(req,res)=>{
+userRouter.post("/",middleware,async(req,res)=>{
 try {
     const userPayLoad = UserSchmea.safeParse(req.body);
     if(!userPayLoad.success){
@@ -18,7 +19,7 @@ try {
             email:userPayLoad.data.email,
             password:userPayLoad.data.password,
             role:userPayLoad.data.role,
-            organizationId:req.
+            organizationId:req.userId
         }
     }).then(()=>{
         return res.status(200).json({

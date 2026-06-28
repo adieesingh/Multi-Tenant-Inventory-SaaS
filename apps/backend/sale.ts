@@ -1,10 +1,11 @@
+import { middleware } from './middleware';
 import { SalesSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express";
 
 export const saleRouter= express.Router();
 
-saleRouter.post("/",async(req,res)=>{
+saleRouter.post("/",middleware,async(req,res)=>{
     try {
         const salePayLoad = SalesSchema.safeParse(req.body);
         if(!salePayLoad.success){
@@ -17,7 +18,7 @@ saleRouter.post("/",async(req,res)=>{
               invoiceNumber:salePayLoad.data.invoiceNumber,
               customerName:salePayLoad.data.customerName,
               totalAmount:salePayLoad.data.totalAmount,
-              organizationsId:
+              organizationsId:req.userId
 
             }
         }).then(()=>{

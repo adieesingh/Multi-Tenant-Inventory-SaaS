@@ -19,7 +19,7 @@ productVariantsRouter.post("/",async(req,res)=>{
                     size:productVariantsPayLoad.data.size,
                     color:productVariantsPayLoad.data.color,
                     stockQuantity:productVariantsPayLoad.data.stockQuantity,
-                    orgiantionsId:
+                    orgiantionsId:req.userId
                 }
             }).then(()=>{
                 return res.status(200).json({

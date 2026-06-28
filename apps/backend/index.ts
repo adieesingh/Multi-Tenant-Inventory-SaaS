@@ -29,4 +29,4 @@ app.use("/api/addSale",saleRouter)
 app.use("/api/addStockMovement",stockMovementsRouter);
 app.use("api/addCategeories",categoriesRouter)
 
-app.listen(3000)
+app.listen(3001)
