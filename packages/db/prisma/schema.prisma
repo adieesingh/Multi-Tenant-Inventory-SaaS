@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  STAFF
+  MANAGER
+}
+
+enum STATUS {
+  PENDING
+  RECEIVED
+  CANCELLED
+}
+
+model Organizations {
+  id              String             @id @default(uuid())
+  name            String
+  phoneNumber     String
+  username        String             @unique
+  password        String
+  address         String
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @default(now())
+  user            User[]
+  supplier        Supplier[]
+  order           Order[]
+  categories      Categories[]
+  product         Products[]
+  product_variant Product_Variants[]
+  product_order   Purchase_Order[]
+  sales           Sales[]
+  stock_movemnets Stock_Movements[]
+  brand            Brands[]
+}
+
+model User {
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String
+  password       String
+  role           Role
+  organizationId String
+  organization   Organizations @relation(fields: [organizationId], references: [id])
+}
+
+model Supplier {
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String?
+  phone          String
+  address        String
+  gstNumber      String
+  organizationId String
+  organization   Organizations @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  purchase_order   Purchase_Order[]
+}
+
+model Order {
+  id             Int           @id @default(autoincrement())
+  name           String
+  organizationId String
+  organizations  Organizations @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+}
+
+model Categories {
+  id             Int           @id @default(autoincrement())
+  name           String
+  organizationId String
+  organizations  Organizations @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  products        Products[]
+}
+model Brands{
+  id Int @id @default(autoincrement())
+  name String
+  organizationId  String
+  organization Organizations @relation(fields: [organizationId],references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime  @default(now())
+  products      Products[]
+}
+
+model Products {
+  id                Int                @id @default(autoincrement())
+  name              String
+  sku               String?
+  description       String?
+  brandId           Int
+  brands            Brands @relation(fields: [brandId],references: [id])
+  categoryId        Int
+  category          Categories @relation(fields: [categoryId],references: [id])
+  costPrice         Int
+  sellingPrice      Int
+  organizationId    String
+  organizations     Organizations      @relation(fields: [organizationId], references: [id])
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now())
+  product_variables Product_Variants[]
+}
+
+model Product_Variants {
+  id                 Int                   @id @default(autoincrement())
+  productId          Int
+  products           Products              @relation(fields: [productId], references: [id])
+  size               String?
+  color              String?
+  stockQuantity      Int
+  orgiantionsId      String
+  orgianzations      Organizations         @relation(fields: [orgiantionsId], references: [id])
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @default(now())
+  product_order_item Purchase_Order_Item[]
+  stock_movments     Stock_Movements[]
+}
+
+model Purchase_Order {
+  id                  Int                   @id @default(autoincrement())
+  supplierId          Int
+  supplier             Supplier @relation(fields: [supplierId],references: [id])
+  totalAmount         Int
+  status              STATUS                @default(PENDING)
+  organizationId      String
+  organizations       Organizations         @relation(fields: [organizationId], references: [id])
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now())
+  purchase_order_item Purchase_Order_Item[]
+  stock_movements     Stock_Movements[]
+}
+
+model Purchase_Order_Item {
+  id               Int              @id @default(autoincrement())
+  purchaseOrderId  Int
+  purchase_order   Purchase_Order   @relation(fields: [purchaseOrderId], references: [id])
+  productVariantId Int
+  product_varaiant Product_Variants @relation(fields: [productVariantId], references: [id])
+  quantity         Int
+  unitCost         Int
+  subtotal         Int
+}
+
+model Sales {
+  id              Int           @id @default(autoincrement())
+  invoiceNumber   String
+  customerName    String
+  totalAmount     Int
+  organizationsId String
+  organizations   Organizations @relation(fields: [organizationsId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+}
+
+model Stock_Movements {
+  id               Int              @id @default(autoincrement())
+  productVariantId Int
+  product_variant  Product_Variants @relation(fields: [productVariantId], references: [id])
+  type             Type
+  quantity         Int
+  purchaseOrderId   Int
+  purchase_orders  Purchase_Order   @relation(fields: [purchaseOrderId], references: [id])
+  organizationId   String
+  organizations    Organizations    @relation(fields: [organizationId], references: [id])
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @default(now())
+}
+
+enum Type {
+  PURCHASE
+  SALE
+  ADJUSTMENT
+  RETURN
+}
+

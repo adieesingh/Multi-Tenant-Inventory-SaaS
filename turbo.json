@@ -1,8 +1,12 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
+
   "ui": "tui",
   "tasks": {
     "build": {
+      "dev:db": {
+        "env": ["DATABASE_URL"]
+      },
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
