@@ -1,10 +1,11 @@
+import { middleware } from './middleware';
 import { StockMovementsSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express";
 
 export const stockMovementsRouter= express.Router();
 
-stockMovementsRouter.post("/",async(req,res)=>{
+stockMovementsRouter.post("/",middleware,async(req,res)=>{
        try {
         const stockMovementsPayLoad = StockMovementsSchema.safeParse(req.body);
         if(!stockMovementsPayLoad.success){
@@ -18,7 +19,7 @@ stockMovementsRouter.post("/",async(req,res)=>{
                 type:stockMovementsPayLoad.data.type,
                 quantity:stockMovementsPayLoad.data.quantity,
                 purchaseOrderId:stockMovementsPayLoad.data.purchaseOrderId,
-                organizationId:
+                organizationId:req.userId
             }
         }).then(()=>{
             return res.status(200).json({

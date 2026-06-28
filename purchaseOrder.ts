@@ -1,10 +1,11 @@
+import { middleware } from './middleware';
 import {  PurchaseOrderSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express"
 
 export const purchaseOrderRouter= express.Router();
 
-purchaseOrderRouter.post("/",async(req,res)=>{
+purchaseOrderRouter.post("/",middleware,async(req,res)=>{
     try {
         const purchaseOrderPayLoad = PurchaseOrderSchema.safeParse(req.body);
         if(!purchaseOrderPayLoad.success){
@@ -17,7 +18,7 @@ purchaseOrderRouter.post("/",async(req,res)=>{
                 supplierId:purchaseOrderPayLoad.data.supplierId,
                 totalAmount:purchaseOrderPayLoad.data.totalAmount,
                 status:purchaseOrderPayLoad.data.status,
-                organizationId:
+                organizationId:req.userId
             }
         }).then(()=>{
             return res.status(200).json({

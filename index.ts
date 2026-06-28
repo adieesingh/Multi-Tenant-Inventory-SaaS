@@ -11,9 +11,9 @@ import { purchaseOrderItemRouter } from "./purchaseOrderItem";
 import { saleRouter } from "./sale";
 import { stockMovementsRouter } from "./stockMovements";
 import { categoriesRouter } from "./categories";
-
+import cookieParser from "cookie-parser"
 const app=express();
-
+app.use(cookieParser())
 app.use(express.json())
 
 app.use("/api/addOrganizations",organizationRouter)
@@ -29,4 +29,4 @@ app.use("/api/addSale",saleRouter)
 app.use("/api/addStockMovement",stockMovementsRouter);
 app.use("api/addCategeories",categoriesRouter)
 
-app.listen(3000)
+app.listen(3001)

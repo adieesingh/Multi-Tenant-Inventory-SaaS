@@ -16,7 +16,7 @@ orderRouter.post("/",async(req,res)=>{
         await prismaClient.order.create({
             data:{
                 name:orderPayLoad.data.name,
-                organizationId:req.
+                organizationId:req.userId
             }
         }).then(()=>{
             return res.status(200).json({
