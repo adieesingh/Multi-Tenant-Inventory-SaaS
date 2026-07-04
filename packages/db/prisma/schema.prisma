@@ -27,7 +27,7 @@ model Organizations {
   password        String
   address         String
   createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
   user            User[]
   supplier        Supplier[]
   order           Order[]
@@ -37,7 +37,7 @@ model Organizations {
   product_order   Purchase_Order[]
   sales           Sales[]
   stock_movemnets Stock_Movements[]
-  brand            Brands[]
+  brand           Brands[]
 }
 
 model User {
@@ -51,17 +51,17 @@ model User {
 }
 
 model Supplier {
-  id             Int           @id @default(autoincrement())
+  id             Int              @id @default(autoincrement())
   name           String
   email          String?
   phone          String
   address        String
   gstNumber      String
   organizationId String
-  organization   Organizations @relation(fields: [organizationId], references: [id])
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now())
-  purchase_order   Purchase_Order[]
+  organization   Organizations    @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  purchase_order Purchase_Order[]
 }
 
 model Order {
@@ -70,7 +70,7 @@ model Order {
   organizationId String
   organizations  Organizations @relation(fields: [organizationId], references: [id])
   createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 }
 
 model Categories {
@@ -79,17 +79,18 @@ model Categories {
   organizationId String
   organizations  Organizations @relation(fields: [organizationId], references: [id])
   createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now())
-  products        Products[]
+  updatedAt      DateTime      @updatedAt
+  products       Products[]
 }
-model Brands{
-  id Int @id @default(autoincrement())
-  name String
-  organizationId  String
-  organization Organizations @relation(fields: [organizationId],references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime  @default(now())
-  products      Products[]
+
+model Brands {
+  id             Int           @id @default(autoincrement())
+  name           String
+  organizationId String
+  organization   Organizations @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  products       Products[]
 }
 
 model Products {
@@ -98,15 +99,15 @@ model Products {
   sku               String?
   description       String?
   brandId           Int
-  brands            Brands @relation(fields: [brandId],references: [id])
+  brands            Brands             @relation(fields: [brandId], references: [id])
   categoryId        Int
-  category          Categories @relation(fields: [categoryId],references: [id])
+  category          Categories         @relation(fields: [categoryId], references: [id])
   costPrice         Int
   sellingPrice      Int
   organizationId    String
   organizations     Organizations      @relation(fields: [organizationId], references: [id])
   createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   product_variables Product_Variants[]
 }
 
@@ -120,7 +121,7 @@ model Product_Variants {
   orgiantionsId      String
   orgianzations      Organizations         @relation(fields: [orgiantionsId], references: [id])
   createdAt          DateTime              @default(now())
-  updatedAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
   product_order_item Purchase_Order_Item[]
   stock_movments     Stock_Movements[]
 }
@@ -128,13 +129,13 @@ model Product_Variants {
 model Purchase_Order {
   id                  Int                   @id @default(autoincrement())
   supplierId          Int
-  supplier             Supplier @relation(fields: [supplierId],references: [id])
+  supplier            Supplier              @relation(fields: [supplierId], references: [id])
   totalAmount         Int
   status              STATUS                @default(PENDING)
   organizationId      String
   organizations       Organizations         @relation(fields: [organizationId], references: [id])
   createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
   purchase_order_item Purchase_Order_Item[]
   stock_movements     Stock_Movements[]
 }
@@ -158,7 +159,7 @@ model Sales {
   organizationsId String
   organizations   Organizations @relation(fields: [organizationsId], references: [id])
   createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model Stock_Movements {
@@ -167,12 +168,12 @@ model Stock_Movements {
   product_variant  Product_Variants @relation(fields: [productVariantId], references: [id])
   type             Type
   quantity         Int
-  purchaseOrderId   Int
+  purchaseOrderId  Int
   purchase_orders  Purchase_Order   @relation(fields: [purchaseOrderId], references: [id])
   organizationId   String
   organizations    Organizations    @relation(fields: [organizationId], references: [id])
   createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 }
 
 enum Type {
@@ -181,4 +182,3 @@ enum Type {
   ADJUSTMENT
   RETURN
 }
-

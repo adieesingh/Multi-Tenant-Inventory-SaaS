@@ -1,3 +1,4 @@
+import { middleware } from './middleware';
 import { OrderSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express"
@@ -5,7 +6,7 @@ import express from "express"
 
 export const orderRouter = express.Router();
 
-orderRouter.post("/",async(req,res)=>{
+orderRouter.post("/",middleware,async(req,res)=>{
     try {
         const orderPayLoad = OrderSchema.safeParse(req.body);
         if(!orderPayLoad.success){

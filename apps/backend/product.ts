@@ -1,9 +1,10 @@
+import { middleware } from './middleware';
 import express from "express";
 import {ProductsSchema} from "@repo/common/validation"
 import {prismaClient} from "@repo/db/client"
 export const productRouter = express.Router();
 
-productRouter.post("/",async(req,res)=>{
+productRouter.post("/",middleware,async(req,res)=>{
     try {
         const productPayLoad =  ProductsSchema.safeParse(req.body);
         if(!productPayLoad.success){
@@ -21,7 +22,7 @@ productRouter.post("/",async(req,res)=>{
             categoryId:productPayLoad.data.categorytId,
             costPrice:productPayLoad.data.costPrice,
             sellingPrice:productPayLoad.data.sellingPrice,
-            organizationId:productPayLoad.data.organizationId,
+            organizationId:req.userId
             }
          
         

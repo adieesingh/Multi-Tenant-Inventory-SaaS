@@ -1,10 +1,11 @@
+import { middleware } from './middleware';
 import { SupplierSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express"
 
 export const supplierRouter = express.Router();
 
-supplierRouter.post("/",async(req,res)=>{
+supplierRouter.post("/",middleware,async(req,res)=>{
     try {
         const supplierPayLoad = SupplierSchema.safeParse(req.body);
         if(!supplierPayLoad.success){
@@ -19,7 +20,7 @@ supplierRouter.post("/",async(req,res)=>{
                 phone:supplierPayLoad.data.phone,
                 address:supplierPayLoad.data.address,
                 gstNumber:supplierPayLoad.data.gstNumber,
-                organizationId:req ,
+                organizationId:req.userId ,
 
             }
         }).then(()=>{

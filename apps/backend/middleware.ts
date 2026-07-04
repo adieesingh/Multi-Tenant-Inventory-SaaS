@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 export const middleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.get("token");
+    const token = req.cookies.token;
+      
     if (!token) {
       return res.status(400).json({
         message: "Token not found",
@@ -18,10 +19,10 @@ export const middleware = (req: Request, res: Response, next: NextFunction) => {
       req.userId = decode.id;
       next();
     }
-  } catch (error) {
+  } catch (error:any) {
     return res.status(500).json({
       message: "Internal Server Down",
-      error:error
+      error:error.message
     });
   }
 };

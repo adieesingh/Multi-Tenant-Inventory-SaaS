@@ -1,10 +1,11 @@
+import { middleware } from './middleware';
 import { ProductVariantsSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express"
 
 export const productVariantsRouter= express.Router();
 
-productVariantsRouter.post("/",async(req,res)=>{
+productVariantsRouter.post("/",middleware,async(req,res)=>{
         try {
             const productVariantsPayLoad = ProductVariantsSchema.safeParse(req.body);
             if(!productVariantsPayLoad.success){

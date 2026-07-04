@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../../.env" });
 export const organizationRouter = express.Router();
 
-organizationRouter.post("/api/addOrganizations", async (req, res) => {
+organizationRouter.post("/", async (req, res) => {
   try {
     const organizationPayLoad = OrganizationSchema.safeParse(req.body);
     if (!organizationPayLoad.success) {
