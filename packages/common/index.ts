@@ -50,7 +50,7 @@ export const ProductsSchema = z.object({
   categorytId: z.number(),
   costPrice:z.number(),
   sellingPrice: z.number(),
-  organizationId: z.string(),
+  organizationId: z.string().optional(),
 });
 
 export const ProductVariantsSchema = z.object({
@@ -98,3 +98,8 @@ export const CategoriesSchema = z.object({
   name: z.string(),
  organizationId:z.string().optional()
 });
+
+export const signinUser = z.object({
+    email:z.email(),
+    password:z.string()
+})

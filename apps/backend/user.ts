@@ -1,5 +1,5 @@
 import { middleware } from './middleware';
-import { UserSchmea } from "@repo/common/validation";
+import { signinUser, UserSchmea } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express";
 
@@ -39,3 +39,18 @@ try {
     })
 }
 })
+userRouter.post("/signin",async(req,res)=>{
+    try {
+        const signinPayLoad = signinUser.safeParse(req.body);  
+        if(!signinPayLoad.success){1
+            return res.status(200).json({
+                message:""
+            })
+        }
+    } catch (error) {
+        
+    }
+})
+
+
+

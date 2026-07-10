@@ -18,6 +18,14 @@ categoriesRouter.post("/",middleware, async (req, res) => {
             name:categoriesPayLoad.data.name,
             organizationId:req.userId
         }
+    }).then(()=>{
+      return res.status(200).json({
+        mmessage:"Data sucesfully"
+      })
+    }).catch((error)=>{
+     return res.status(400).json({
+      message:error
+     })
     })
   } catch (error) {
     return res.status(500).json({

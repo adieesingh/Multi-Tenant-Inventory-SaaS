@@ -21,7 +21,8 @@ brandRouter.post("/",middleware,async(req,res)=>{
         }
        }).then(()=>{
         return res.status(200).json({
-            message:"Data doesnt succesfully"
+            message:"Data succesfully  added",
+           
         })
        }).catch((error)=>{
             return res.status(400).json({

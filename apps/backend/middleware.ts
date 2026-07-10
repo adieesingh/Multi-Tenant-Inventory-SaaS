@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const middleware = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.token;
-      
+      console.log(token)
     if (!token) {
       return res.status(400).json({
         message: "Token not found",

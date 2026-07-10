@@ -27,6 +27,6 @@ app.use("/api/addPurchaseOrder",purchaseOrderRouter);
 app.use("/api/addPurchaseOrderItem",purchaseOrderItemRouter);
 app.use("/api/addSale",saleRouter)
 app.use("/api/addStockMovement",stockMovementsRouter);
-app.use("api/addCategeories",categoriesRouter)
+app.use("/api/addCategeories",categoriesRouter)
 
 app.listen(3001)
