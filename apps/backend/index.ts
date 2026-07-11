@@ -2,7 +2,7 @@ import express from "express"
 import { organizationRouter } from "./organization";
 import { userRouter } from "./user";
 import { supplierRouter } from "./supplier";
-import { orderRouter } from "./order";
+
 import { brandRouter } from "./brand";
 import { productRouter } from "./product";
 import { productVariantsRouter } from "./product-Variants";
@@ -19,7 +19,7 @@ app.use(express.json())
 app.use("/api/addOrganizations",organizationRouter)
 app.use("/api/user",userRouter)
 app.use("/api/addSupplier",supplierRouter);
-app.use("/api/addOrder",orderRouter)
+
 app.use("/api/addBrand",brandRouter)
 app.use("/api/addProduct",productRouter)
 app.use("/api/addProductVariants",productVariantsRouter);

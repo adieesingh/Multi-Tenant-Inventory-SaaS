@@ -30,7 +30,7 @@ model Organizations {
   updatedAt       DateTime           @updatedAt
   user            User[]
   supplier        Supplier[]
-  order           Order[]
+ 
   categories      Categories[]
   product         Products[]
   product_variant Product_Variants[]
@@ -64,14 +64,7 @@ model Supplier {
   purchase_order Purchase_Order[]
 }
 
-model Order {
-  id             Int           @id @default(autoincrement())
-  name           String
-  organizationId String
-  organizations  Organizations @relation(fields: [organizationId], references: [id])
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-}
+
 
 model Categories {
   id             Int           @id @default(autoincrement())
