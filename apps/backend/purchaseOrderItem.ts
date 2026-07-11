@@ -14,13 +14,14 @@ purchaseOrderItemRouter.post("/",middleware,async(req,res)=>{
                 error:purchaseOrderItemPayLoad.error
             })
         }
+        const total = purchaseOrderItemPayLoad.data.quantity*purchaseOrderItemPayLoad.data.unitCost;
         await prismaClient.purchase_Order_Item.create({
             data:{
                 purchaseOrderId:purchaseOrderItemPayLoad.data.purchaseOrderId,
                 productVariantId:purchaseOrderItemPayLoad.data.productVariantId,
                 quantity:purchaseOrderItemPayLoad.data.quantity,
                 unitCost:purchaseOrderItemPayLoad.data.unitCost,
-                subtotal:purchaseOrderItemPayLoad.data.subtotal
+                subtotal:total
             }
         }).then(()=>{
             return res.status(200).json({

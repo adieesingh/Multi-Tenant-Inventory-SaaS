@@ -58,7 +58,7 @@ export const ProductVariantsSchema = z.object({
   size: z.string(),
   color: z.string(),
   stockQuantity: z.number(),
-  organizationId: z.string(),
+  
 });
 
 export const PurchaseOrderSchema = z.object({
@@ -76,7 +76,7 @@ export const PurchaseOrderItemSchema = z.object({
   productVariantId: z.number(),
   quantity: z.number(),
   unitCost: z.number(),
-  subtotal: z.number(),
+  subtotal: z.number().optional(),
 });
 export const SalesSchema = z.object({
   invoiceNumber: z.string(),
