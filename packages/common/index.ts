@@ -35,22 +35,19 @@ export const SupplierSchema = z.object({
 });
 export const OrderSchema = z.object({
   name: z.string(),
-  organizationId: z.number(),
 });
 export const BrandsSchema = z.object({
   name: z.string(),
-  
 });
 
 export const ProductsSchema = z.object({
-  name: z.string().min(3,{error:"Min 3 letter should be there"}),
+  name: z.string().min(3, { error: "Min 3 letter should be there" }),
   sku: z.string().optional(),
   description: z.string().optional(),
   brandId: z.number(),
   categorytId: z.number(),
-  costPrice:z.number(),
+  costPrice: z.number(),
   sellingPrice: z.number(),
-  organizationId: z.string().optional(),
 });
 
 export const ProductVariantsSchema = z.object({
@@ -58,7 +55,6 @@ export const ProductVariantsSchema = z.object({
   size: z.string(),
   color: z.string(),
   stockQuantity: z.number(),
-  
 });
 
 export const PurchaseOrderSchema = z.object({
@@ -67,8 +63,6 @@ export const PurchaseOrderSchema = z.object({
   status: z.enum(["PENDING", "RECEIVED", "CANCELLED"], {
     error: "Only 3 option available",
   }),
-  organizationId: z.string()
-  .optional(),
 });
 
 export const PurchaseOrderItemSchema = z.object({
@@ -82,7 +76,6 @@ export const SalesSchema = z.object({
   invoiceNumber: z.string(),
   customerName: z.string(),
   totalAmount: z.number(),
-  organizationsId: z.number(),
 });
 
 export const StockMovementsSchema = z.object({
@@ -92,14 +85,12 @@ export const StockMovementsSchema = z.object({
   }),
   quantity: z.number(),
   purchaseOrderId: z.number(),
-  organizationId: z.number(),
 });
 export const CategoriesSchema = z.object({
   name: z.string(),
- organizationId:z.string().optional()
 });
 
 export const signinUser = z.object({
-    email:z.email(),
-    password:z.string()
-})
+  email: z.email(),
+  password: z.string(),
+});
