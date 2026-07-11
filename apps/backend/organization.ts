@@ -3,6 +3,7 @@ import { OrganizationSchema } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
+import { middleware } from "./middleware";
 dotenv.config({ path: "../../.env" });
 export const organizationRouter = express.Router();
 
@@ -45,3 +46,49 @@ organizationRouter.post("/", async (req, res) => {
     });
   }
 });
+organizationRouter.get("/",middleware,async(req,res)=>{
+     try {
+      const response = await prismaClient.organizations.findMany();
+      if(response){
+        return res.status(200).json({
+          message:response
+        })
+      }
+      if(!response){
+        return res.status(400).json({
+          message:"Not Found"
+        })
+      }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+})
+
+organizationRouter.patch("/:id",middleware,async(req,res)=>{
+   try {
+      const {id} = req.params;
+      const updatedBody= req.body;
+      const response = await prismaClient.organizations.update({
+      where:{
+        id:String(id)
+      },
+      data:updatedBody
+      })
+      if(response){
+        return res.status(200).json({
+          message:"Update succesfully"
+        })
+      }
+      if(!response){
+        return res.status(400).json({
+          message:"Dont update "
+        })
+      }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+})

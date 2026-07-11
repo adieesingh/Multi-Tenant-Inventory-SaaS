@@ -36,3 +36,74 @@ brandRouter.post("/",middleware,async(req,res)=>{
         })        
     }
 })
+brandRouter.get("/",middleware,async(req,res)=>{
+    try {
+      const response =await prismaClient.brands.findMany();
+      if(response){
+        return res.status(200).json({
+            message:response
+        })
+      }
+      if(!response){
+        return res.status(400).json({
+            message:"Didnt find "
+        })
+      }  
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server Down"
+        })
+    }
+});
+
+brandRouter.patch("/:id",middleware,async(req,res)=>{
+    try {
+      const {id} = req.params;
+      const updateData = req.body;
+      const response = await prismaClient.brands.update({
+        where:{
+            id:Number(id)
+        },
+        data:updateData
+      })
+      if(!response){
+        return res.status(400).json({
+            message:"Couldnt update it"
+        })
+      }
+      if(response){
+        return res.status(200).json({
+            message:"Update succesfully"
+        })
+      }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+});
+
+brandRouter.delete("/:id",async(req,res)=>{
+     try {
+      const {id}= req.params;
+      const response = await prismaClient.brands.delete({
+        where:{
+            id:Number(id)
+        }
+      })
+      if(!response){
+        return res.status(400).json({
+            message:"Not Deleted"
+        })
+      }
+      if(response){
+        return res.status(200).json({
+            message:"Deletd succesfully"
+        })
+      }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+})

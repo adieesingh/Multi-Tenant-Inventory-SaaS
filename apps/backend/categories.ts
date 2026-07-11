@@ -34,3 +34,23 @@ categoriesRouter.post("/",middleware, async (req, res) => {
     });
   }
 });
+
+categoriesRouter.get("/",middleware,async(req,res)=>{
+   try {
+      const response = await prismaClient.categories.findMany();
+        if(!response){
+          return res.status(400).json({
+            message:"Couldnt find"
+          })
+        }
+        if(response){
+          return res.status(200).json({
+            message:response
+          })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+})

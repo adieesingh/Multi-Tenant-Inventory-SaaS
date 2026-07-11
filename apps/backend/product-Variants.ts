@@ -38,3 +38,77 @@ productVariantsRouter.post("/",middleware,async(req,res)=>{
            }) 
         }
 })
+
+productVariantsRouter.get("/",middleware,async(req,res)=>{
+        try {
+      const response = await prismaClient.product_Variants.findMany();
+      if(response){
+        return res.status(200).json({
+            message:response
+        })
+      }
+        if(!response){
+            return res.status(400).json({
+               message:"Didnt Find"     
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+})
+
+productVariantsRouter.patch("/:id",middleware,async(req,res)=>{
+     try {
+      const {id}= req.params;
+      const updateBody = req.body;
+
+      const response = await prismaClient.product_Variants.update({
+        where:{
+            id:Number(id)
+        },
+        data:updateBody
+      })
+        if(!response){
+            return res.status(400).json({
+                message:"Dont updated"
+            })
+        }
+        if(response){
+            return res.status(200).json({
+                message:"Updated sucessfulluy"
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+});
+//delete
+productVariantsRouter.delete("/:id",async(req,res)=>{
+     try {
+     const {id}= req.params;
+     
+     const response = await prismaClient.product_Variants.delete({
+        where:{
+            id:Number(id)
+        }
+     }) 
+    if(response){
+        return res.status(200).json({
+            message:"Deleted succesfully"
+        })
+    }
+    if(!response){
+        return res.status(400).json({
+            message:"Not deleted"
+        })
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message:"Internal Server down"
+        })
+    }
+})
