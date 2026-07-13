@@ -20,17 +20,17 @@ enum STATUS {
 }
 
 model Organizations {
-  id              String             @id @default(uuid())
-  name            String
-  phoneNumber     String
-  username        String             @unique
-  password        String
-  address         String
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
-  user            User[]
-  supplier        Supplier[]
- 
+  id          String     @id @default(uuid())
+  name        String
+  phoneNumber String
+  username    String     @unique
+  password    String
+  address     String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  user        User[]
+  supplier    Supplier[]
+
   categories      Categories[]
   product         Products[]
   product_variant Product_Variants[]
@@ -63,8 +63,6 @@ model Supplier {
   updatedAt      DateTime         @updatedAt
   purchase_order Purchase_Order[]
 }
-
-
 
 model Categories {
   id             Int           @id @default(autoincrement())

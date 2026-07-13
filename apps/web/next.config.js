@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  transpilePackages: ["@multi-inv/ui", "@multi-inv/types"],
+};
 
-export default nextConfig;
+module.exports = nextConfig;
