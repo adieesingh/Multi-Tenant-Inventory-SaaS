@@ -10,10 +10,12 @@ import { purchaseOrderItemRouter } from "./purchaseOrderItem";
 import { saleRouter } from "./sale";
 import { stockMovementsRouter } from "./stockMovements";
 import { categoriesRouter } from "./categories";
+import cors from "cors"
 import cookieParser from "cookie-parser"
-const app=express();
+const app = express();
 app.use(cookieParser())
 app.use(express.json())
+app.use(cors());
 
 app.use("/api/addOrganizations",organizationRouter)
 app.use("/api/user",userRouter)

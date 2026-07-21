@@ -2,8 +2,9 @@ import { AspectRatioPortrait } from "@/components/ui/aspect-ratio";
 import { ButtonLink } from "@/components/ui/button";
 import { FieldInput } from "@/components/ui/field";
 import { Text } from "@/components/ui/text";
-
-export default function LoginPage() {
+import axios from "axios"
+export  default async function LoginPage() {
+  const handleLogin = await axios.post("http://localhost:3000/addUser")
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 p-6">
       <div className="w-max-md flex flex-col items-center bg-white space-y-6 border shadow-lg rounded-2xl px-6 py-6">
