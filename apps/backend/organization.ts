@@ -19,10 +19,10 @@ organizationRouter.post("/", async (req, res) => {
     const response = await prismaClient.organizations.create({
       data: {
         name: organizationPayLoad.data.name,
-        username: organizationPayLoad.data.username,
+        
         phoneNumber: organizationPayLoad.data.phoneNumber,
         address: organizationPayLoad.data.address,
-        password: organizationPayLoad.data.password,
+       
       },
     });
     if (!response) {
