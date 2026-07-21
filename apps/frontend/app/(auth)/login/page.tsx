@@ -1,3 +1,4 @@
+import { AspectRatioPortrait } from "@/components/ui/aspect-ratio";
 import { ButtonLink } from "@/components/ui/button";
 import { FieldInput } from "@/components/ui/field";
 import { Text } from "@/components/ui/text";
@@ -6,6 +7,8 @@ export default function LoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 p-6">
       <div className="w-max-md flex flex-col items-center bg-white space-y-6 border shadow-lg rounded-2xl px-6 py-6">
+        
+        <AspectRatioPortrait alt="logo" ratio={16/9} src="/logo.png"></AspectRatioPortrait>
         <h2 className="text-4xl font-bold text-gray-900"> Sign in your Account</h2>
         <p className="text-center text-gray-500">Welcome back! Please sign in.</p>
         <FieldInput
