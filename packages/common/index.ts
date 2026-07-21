@@ -7,10 +7,8 @@ const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}Z[A-Z\d]{1}$/;
 
 export const OrganizationSchema = z.object({
   name: z.string(),
-  username: z.email(),
   phoneNumber: z.string().regex(phoneRegex),
   address: z.string(),
-  password: z.string(),
 });
 
 export const UserSchmea = z.object({
@@ -91,6 +89,8 @@ export const CategoriesSchema = z.object({
 });
 
 export const signinUser = z.object({
-  email: z.email(),
-  password: z.string(),
+  email: z.email({ message: "Invalid email" }),
+  password: z.string().min(8, { message: "Min 8 character" }),
 });
+
+export type LoginForm = z.infer<typeof signinUser>;
