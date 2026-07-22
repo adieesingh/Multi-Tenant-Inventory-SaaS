@@ -5,7 +5,7 @@ import express from "express";
 
 export const userRouter = express.Router();
 // post
-userRouter.post("/",middleware,async(req,res)=>{
+userRouter.post("/",async(req,res)=>{
 try {
     const userPayLoad = UserSchmea.safeParse(req.body);
     if(!userPayLoad.success){
@@ -18,8 +18,8 @@ try {
             name:userPayLoad.data.name,
             email:userPayLoad.data.email,
             password:userPayLoad.data.password,
-            role:userPayLoad.data.role,
-            organizationId:req.userId
+            role:userPayLoad.data.role || "OWNER",
+            organizationId:req.userId || "1"
         }
     }).then(()=>{
         return res.status(200).json({
@@ -108,6 +108,40 @@ userRouter.patch("/:id",middleware,async(req,res)=>{
     } catch (error) {
         return res.status(500).json({
             message:"Internal Server down"
+        })
+    }
+})
+
+userRouter.post("/login",async(req,res)=>{
+    try {
+        const signinPayLoad = signinUser.safeParse(req.body);
+        if(!signinPayLoad){
+            return res.status(400).json({
+                message:"Data doesnt valid"
+            })
+        }
+        const response = await prismaClient.user.findFirst({
+            where:{
+                email:signinPayLoad.data?.email
+            }
+        })
+        if(!response){
+            return res.status(400).json({
+                message:"Email not exist! please sign up"
+            })
+        }
+      
+        if(response.password !== signinPayLoad.data?.password){
+          return res.status(400).json({
+            message:"Password doestn match"
+          })
+        }
+       return res.status(200).json({
+        message:"Login sucessfully"
+       })
+    } catch (error) {
+        return res.status(500).json({
+            message:error
         })
     }
 })
