@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { InputHTMLAttributes, useMemo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -239,20 +239,21 @@ export {
   FieldInput,
 };
 
-interface FieldInputProp {
+interface FieldInputProp extends  InputHTMLAttributes<HTMLInputElement> {
   label: string;
   text?: string;
   type: "text" | "password" | "tel";
   placeholder: string;
   id: string;
+ 
 }
 
-function FieldInput({ label, text, type, placeholder, id }: FieldInputProp) {
+function FieldInput({ label, text, type, placeholder, id ,...props}: FieldInputProp) {
   return (
     <FieldSet className="w-full max-w-xs">
       <Field>
         <FieldLabel htmlFor={id}>{label}</FieldLabel>
-        <Input id={id} type={type} placeholder={placeholder} />
+        <Input id={id} type={type} {...props} placeholder={placeholder} />
         <FieldDescription>{text}</FieldDescription>
       </Field>
     </FieldSet>
