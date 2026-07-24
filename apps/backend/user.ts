@@ -125,6 +125,8 @@ userRouter.post("/login",async(req,res)=>{
                 email:signinPayLoad.data?.email
             }
         })
+        console.log(signinPayLoad.data?.email)
+        console.log(signinPayLoad.data?.password)
         if(!response){
             return res.status(400).json({
                 message:"Email not exist! please sign up"
@@ -133,12 +135,18 @@ userRouter.post("/login",async(req,res)=>{
       
         if(response.password !== signinPayLoad.data?.password){
           return res.status(400).json({
-            message:"Password doestn match"
+            message:"Password doesn't match"
           })
         }
-       return res.status(200).json({
-        message:"Login sucessfully"
-       })
+      if(response==null){
+        return res.status(200).json({
+            message:"Something went wrong"
+        })
+      }
+      return res.status(200).json({
+        message:"Login succesfully"
+      })
+
     } catch (error) {
         return res.status(500).json({
             message:error
