@@ -1,15 +1,16 @@
-import { Button as ButtonPrimitive } from "@base-ui/react/button"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
-import { LoginForm } from "@repo/common/validation"
+import { cn } from "@/lib/utils";
+import { LoginForm } from "@repo/common/validation";
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        primary:"bg-blue-600 hover:bg-blue-900 text-white hover:cursor-pointer",
+        primary:
+          "bg-blue-600 hover:bg-blue-900 text-white hover:cursor-pointer",
         default: "bg-primary text-primary-foreground hover:bg-primary/80",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
@@ -39,8 +40,8 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
-)
+  },
+);
 
 function Button({
   className,
@@ -54,21 +55,47 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
- function ButtonDefault({variant,size,className}:VariantProps<typeof buttonVariants> & ButtonPrimitive.Props) {
-  return <Button variant={variant} size={size} className={className}>Button</Button>
+function ButtonDefault({
+  variant,
+  size,
+  className,
+}: VariantProps<typeof buttonVariants> & ButtonPrimitive.Props) {
+  return (
+    <Button variant={variant} size={size} className={className}>
+      Button
+    </Button>
+  );
 }
-interface ButtonLinkProps{
-  text:string,
-  className?:string,
-  onClick?:(data:React.MouseEvent<HTMLButtonElement>)=>void
-  disabled:boolean,
-  type:"submit" |"button"
-
+interface ButtonLinkProps {
+  text: string;
+  className?: string;
+  onClick?: (data: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled: boolean;
+  type: "submit" | "button";
 }
-function ButtonLink({text ,variant,size,className,disabled,onClick,type}:ButtonLinkProps & VariantProps<typeof buttonVariants>) {
-  return <Button type={type} onClick={onClick} variant={variant} disabled={disabled} size={size} className={"max-w-sx w-full font-bold"}>{text}</Button>
+function ButtonLink({
+  text,
+  variant,
+  size,
+  className,
+  disabled,
+  onClick,
+  type,
+}: ButtonLinkProps & VariantProps<typeof buttonVariants>) {
+  return (
+    <Button
+      type={type}
+      onClick={onClick}
+      variant={variant}
+      disabled={disabled}
+      size={size}
+      className={"max-w-sx w-full font-bold"}
+    >
+      {text}
+    </Button>
+  );
 }
-export { Button, buttonVariants ,ButtonDefault, ButtonLink}
+export { Button, buttonVariants, ButtonDefault, ButtonLink };

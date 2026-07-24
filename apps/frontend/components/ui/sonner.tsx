@@ -47,17 +47,20 @@ const Toaster = ({ ...props }: ToasterProps) => {
   )
 }
 interface SonnerProps{
-  text:string,
-  onClick:()=>void,
-  variant: "primary" | "outline"
+  
+  onClick?:()=>void,
+  variant?: "primary" | "outline",
+  icon:"loading" | "error" | "warning" |"info"| "success"
+
 }
- function SonnerPosition({text,variant,onClick,...props}:SonnerProps) {
+ function SonnerPosition({icon,variant,onClick}:SonnerProps) {
   return (
     <Button
         variant={variant}
         onClick={onClick}
+
       >
-        {text}
+       
       </Button>
   )
 }
