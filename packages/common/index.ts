@@ -10,6 +10,7 @@ export const OrganizationSchema = z.object({
   phoneNumber: z.string().regex(phoneRegex),
   address: z.string(),
 });
+export type OrganizationPage = z.infer<typeof OrganizationSchema>
 
 export const UserSchmea = z.object({
   name: z.string(),
