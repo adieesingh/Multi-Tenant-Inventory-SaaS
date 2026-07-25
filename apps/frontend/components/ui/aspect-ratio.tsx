@@ -23,7 +23,8 @@ import Image from "next/image"
 interface ImageProp{
   src:string,
   ratio:number,
-  alt:string
+  alt:string,
+ 
 
 }
 
@@ -32,9 +33,11 @@ interface ImageProp{
   return (
     <AspectRatio
       ratio={ratio}
+      
       className="w-full max-w-40 rounded-lg bg-muted"
     >
       <Image
+       
         src={src}
         alt={alt}
         fill
