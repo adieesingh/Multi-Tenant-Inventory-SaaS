@@ -9,10 +9,11 @@ import { LoginForm, signinUser } from "@repo/common/validation";
 import axios from "axios";
 
 import { toast } from "sonner";
-import { Router } from "next/router";
+import {  useRouter } from "next/router";
+import { Link } from "lucide-react";
 
 export default function LoginPage() {
-  const router = Router;
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,7 +33,7 @@ export default function LoginPage() {
       );
       if (response) {
         toast.success(response.data.message);
-        
+        router.push("/dashboard")
       }
       if (response.status == 400) {
         toast.error(response.data.message);
@@ -101,6 +102,7 @@ export default function LoginPage() {
           label="Signup"
         ></Text>
       </form>
+     
     </main>
   );
 }
