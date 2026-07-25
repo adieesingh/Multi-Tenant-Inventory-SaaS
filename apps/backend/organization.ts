@@ -15,11 +15,13 @@ organizationRouter.post("/", async (req, res) => {
         message: "Data not format",
       });
     }
+    console.log(organizationPayLoad.data.address)
+    console.log(organizationPayLoad.data.name)
+    console.log(organizationPayLoad.data.phoneNumber)
 
     const response = await prismaClient.organizations.create({
       data: {
         name: organizationPayLoad.data.name,
-        
         phoneNumber: organizationPayLoad.data.phoneNumber,
         address: organizationPayLoad.data.address,
        
@@ -32,10 +34,15 @@ organizationRouter.post("/", async (req, res) => {
     }
     if (response) {
       const token = jwt.sign(
-        { id: response.id },
-        process.env.JWT_SECRET as string,
+        { id: response.id},
+        process.env.JWT_SECRET as string, {expiresIn:"5m"}
       );
-      return res.status(200).cookie("token", token).json({
+      return res.status(200).cookie("organizationToken", token,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV == "production",
+        sameSite:"strict",
+        maxAge:5 * 60* 100
+      }).json({
         message: "Organization added succesfully",
       });
     }
