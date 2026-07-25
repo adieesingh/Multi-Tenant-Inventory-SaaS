@@ -6,9 +6,9 @@ const phoneRegex = new RegExp(
 const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}Z[A-Z\d]{1}$/;
 
 export const OrganizationSchema = z.object({
-  name: z.string(),
-  phoneNumber: z.string().regex(phoneRegex),
-  address: z.string(),
+  name: z.string().min(3,{message:"Invalid Name"}),
+  phoneNumber: z.string().regex(phoneRegex,{message:"Phone is not valid"}),
+  address: z.string().min(3,{message:"Invalid address"}),
 });
 export type OrganizationPage = z.infer<typeof OrganizationSchema>
 
