@@ -12,15 +12,15 @@ export const OrganizationSchema = z.object({
 });
 export type OrganizationPage = z.infer<typeof OrganizationSchema>
 
-export const UserSchmea = z.object({
-  name: z.string(),
-  email: z.string(),
+export const SignupSchema = z.object({
+  name: z.string().trim().min(3,{message:"Invalid name"}),
+  email: z.email({message:"Invalid email"}).trim(),
   password: z.string().min(8, { error: "Min 8 Charachetr should be there" }),
   role: z.enum(["OWNER", "MANAGER", "STAFF"], {
     error: "Only 3 role are there",
-  }),
+  }).optional(),
 });
-
+export type SignupPage= z.infer<typeof SignupSchema>
 export const SupplierSchema = z.object({
   name: z.string().min(4, { error: "naming should be more than 4 words" }),
   email: z.email({ error: "Email is not valid" }),
