@@ -4,7 +4,7 @@ import { prismaClient } from "@repo/db/client";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 import { middleware } from "./middleware";
-dotenv.config({ path: "../../.env" });
+dotenv.config()
 export const organizationRouter = express.Router();
 
 organizationRouter.post("/", async (req, res) => {
@@ -33,15 +33,15 @@ organizationRouter.post("/", async (req, res) => {
       });
     }
     if (response) {
-      const token = jwt.sign(
+      const token =  jwt.sign(
         { id: response.id},
-        process.env.JWT_SECRET as string, {expiresIn:"5m"}
+        process.env.JWT_SECRET_TEMP!, {expiresIn:"5m"}
       );
       return res.status(200).cookie("organizationToken", token,{
         httpOnly:true,
         secure:process.env.NODE_ENV == "production",
         sameSite:"strict",
-        maxAge:5 * 60* 100
+        maxAge:5 * 60* 1000
       }).json({
         message: "Organization added succesfully",
       });
