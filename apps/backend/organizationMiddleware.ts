@@ -1,8 +1,10 @@
+import  dotenv  from 'dotenv';
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-export const middleware = (req: Request, res: Response, next: NextFunction) => {
+dotenv.config()
+export const organizationMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.userToken;
+    const token = req.cookies.organizationToken;
       console.log(token)
     if (!token) {
       return res.status(400).json({
@@ -12,7 +14,7 @@ export const middleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = token.startsWith("Bearer ") ? token.substring(7) : token;
     const decode = jwt.verify(
       authHeader,
-      process.env.JWT_SECRET as string,
+      process.env.JWT_SECRET_TEMP!,
     ) as jwt.JwtPayload;
 
     if (decode.id) {
