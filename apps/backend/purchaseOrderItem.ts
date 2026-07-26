@@ -101,7 +101,7 @@ purchaseOrderItemRouter.delete("/:id",middleware,async(req,res)=>{
         return res.status(200).json({
             nmessage:"Deleetd succesfully"
         })
-     }
+     } 
      if(!response){
         return res.status(400).json({
             message:"Not deleted succesfully"

@@ -1,36 +1,43 @@
+import  jwt  from 'jsonwebtoken';
 import { middleware } from './middleware';
-import { signinUser, UserSchmea } from "@repo/common/validation";
+import { signinUser, SignupSchema  } from "@repo/common/validation";
 import { prismaClient } from "@repo/db/client";
 import express from "express";
+import { organizationMiddleware } from './organizationMiddleware';
 
 export const userRouter = express.Router();
 // post
-userRouter.post("/",async(req,res)=>{
+userRouter.post("/",organizationMiddleware,async(req,res)=>{
 try {
-    const userPayLoad = UserSchmea.safeParse(req.body);
+    const userPayLoad = SignupSchema.safeParse(req.body);
     if(!userPayLoad.success){
         return res.status(400).json({
-            message:"Data doesnt valid"
+            message:"Data doesnt valid",
+            error:userPayLoad.error
         })
     }
-    await prismaClient.user.create({
+    const response =await prismaClient.user.create({
         data:{
             name:userPayLoad.data.name,
             email:userPayLoad.data.email,
             password:userPayLoad.data.password,
-            role:userPayLoad.data.role || "OWNER",
-            organizationId:req.userId || "1"
+            role:userPayLoad.data.role,
+            organizationId:req.userId 
         }
-    }).then(()=>{
-        return res.status(200).json({
-            message:"Data eneter succesfully"
-        })
-    }).catch((error)=>{
-        return res.status(400).json({
-            message:"Data doesnyt eneter",
-            error
-        })
+        
     })
+    if(response){
+        const token = jwt.sign({userId:response.organizationId,name:response.name,role:response.role},process.env.JWT_SECRET!);
+
+        return res.cookie("userToken",token,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV == "production",
+        sameSite:"strict",
+        maxAge: 7* 24 * 60 * 60 * 1000
+        }).status(201).json({
+            message:""
+        })
+    }
 
 } catch (error) {
     return res.status(500).json({
@@ -143,7 +150,13 @@ userRouter.post("/login",async(req,res)=>{
             message:"Something went wrong"
         })
       }
-      return res.status(200).json({
+      const token = jwt.sign({id:response.organizationId,name:response.name,role:response.role},process.env.JWT_SECRET!,{expiresIn:"7d"})
+      return res.status(201).cookie("userToken",token,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV=="production",
+        sameSite:true,
+        maxAge:7*24*60*1000
+      }).json({
         message:"Login succesfully"
       })
 
