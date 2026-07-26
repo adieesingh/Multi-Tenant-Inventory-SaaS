@@ -1,5 +1,6 @@
 import express from "express"
 import { organizationRouter } from "./organization";
+import dotenv from "dotenv"
 import { userRouter } from "./user";
 import { supplierRouter } from "./supplier";
 import { brandRouter } from "./brand";
@@ -19,7 +20,7 @@ app.use(cors({
     origin:"http://localhost:3000",
     credentials:true
 }));
-
+dotenv.config();
 app.use("/api/addOrganizations",organizationRouter)
 app.use("/api/user",userRouter)
 app.use("/api/addSupplier",supplierRouter);
