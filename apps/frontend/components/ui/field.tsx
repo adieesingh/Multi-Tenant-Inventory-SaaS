@@ -242,7 +242,7 @@ export {
 interface FieldInputProp extends  InputHTMLAttributes<HTMLInputElement> {
   label: string;
   text?: string;
-  type: "text" | "password" | "tel";
+  type: "text" | "password" | "tel" | "email";
   placeholder: string;
   id: string;
  
