@@ -1,16 +1,14 @@
 "use client";
 import { AspectRatioPortrait } from "@/components/ui/aspect-ratio";
-import { ButtonLink } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { FieldInput } from "@/components/ui/field";
 import { Text } from "@/components/ui/text";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LoginForm, signinUser } from "@repo/common/validation";
 import axios from "axios";
-
 import { toast } from "sonner";
-import {  useRouter } from "next/router";
-import { Link } from "lucide-react";
+import {  useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,7 +26,7 @@ export default function LoginPage() {
   const handleLogin = async (data: LoginForm) => {
     try {
       const response = await axios.post(
-        `{process.env.NEXT_PUBLIC_API_URL}/user/login`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
         data,
       );
       if (response) {
@@ -90,12 +88,12 @@ export default function LoginPage() {
         {errors.password && (
           <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
-        <ButtonLink
+        <Button
           variant={"primary"}
           type="submit"
           text={isSubmitting ? "⏳ Logging in..." : "Login"}
           disabled={isSubmitting}
-        ></ButtonLink>
+        ></Button>
         <Text
           href="/signup"
           text="Don't have an account?"
