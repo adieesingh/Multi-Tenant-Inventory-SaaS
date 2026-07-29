@@ -1,6 +1,6 @@
 "use client";
 import { AspectRatioPortrait } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { FieldInput } from "@/components/ui/field";
 import { Text } from "@/components/ui/text";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { LoginForm, signinUser } from "@repo/common/validation";
 import axios from "axios";
 import { toast } from "sonner";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,11 +31,10 @@ export default function LoginPage() {
       );
       if (response) {
         toast.success(response.data.message);
-        router.push("/dashboard")
+        router.push("/dashboard");
       }
       if (response.status == 400) {
         toast.error(response.data.message);
-        
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -53,12 +52,10 @@ export default function LoginPage() {
       >
         <AspectRatioPortrait
           alt="logo"
-          
           ratio={16 / 9}
           src="/logo.png"
         ></AspectRatioPortrait>
         <h2 className="text-4xl font-bold text-gray-900 text-center">
-          
           Sign in your Account
         </h2>
         <p className="text-center text-gray-500">
@@ -88,19 +85,18 @@ export default function LoginPage() {
         {errors.password && (
           <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
-        <Button
-          variant={"primary"}
-          type="submit"
-          text={isSubmitting ? "⏳ Logging in..." : "Login"}
-          disabled={isSubmitting}
-        ></Button>
+        <ButtonLink type="submit" disabled={isSubmitting}
+        text={isSubmitting ? "⏳ Logging in..." : "Login"} 
+        className="w-full max-w-md bg-blue-500 hover:bg-blue-900 hover:cursor-pointer"
+        >
+        
+        </ButtonLink>
         <Text
           href="/signup"
           text="Don't have an account?"
           label="Signup"
         ></Text>
       </form>
-     
     </main>
   );
 }
