@@ -1,6 +1,7 @@
 "use client"
-import { Boxes, LayoutGrid, Sidebar, Truck } from "lucide-react";
+import { Boxes, LayoutGrid, Truck } from "lucide-react";
 import {
+  Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarHeader,
@@ -10,7 +11,7 @@ import {
 } from "./sidebar";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-const router = useRouter()
+
 const items = [
   {
     title: "categories",
@@ -28,20 +29,22 @@ const items = [
     icon: Truck,
   },
 ];
+
 export function AppSideBar() {
-  const pathname = usePathname();
+const pathname = usePathname();
+const router = useRouter()
   return (
     <Sidebar>
-      <SidebarHeader className="text-xl font-bold px-4 py-4">
-        StockFlow
+      <SidebarHeader className="text-xl font-bold px-4 py-4 ">
+        StockFlo
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="flex ">
         <SidebarGroup />
-        <SidebarMenu>
+        <SidebarMenu >
           {items.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton 
-              asChild
+                                                                            
               isActive={pathname === item.href}>
                 <Link href={item.href}>
                   <item.icon className="h-4 w-4" />
