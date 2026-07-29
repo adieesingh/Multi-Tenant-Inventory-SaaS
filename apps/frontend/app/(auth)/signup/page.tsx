@@ -101,10 +101,11 @@ export default function Signup() {
           )}
           <ButtonLink
             disabled={isSubmitting}
-            text={isSubmitting ? "Creating Account..." : "Signup"}
+            className="w-full max-w-md bg-blue-500 hover:bg-blue-900 hover:cursor-pointer"
             type="submit"
-            variant={"primary"}
-            
+            variant={"default"}
+            size={"lg"}
+            text={isSubmitting ? "Creating Account..." : "Signup"}
           ></ButtonLink>
           <p className=" text-sm underline hover:cursor-pointer text-neutral-fo"> Already have an account?{" "}
           <Link
