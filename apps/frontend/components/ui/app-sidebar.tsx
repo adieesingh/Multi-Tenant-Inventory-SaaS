@@ -34,27 +34,27 @@ export function AppSideBar() {
 const pathname = usePathname();
 const router = useRouter()
   return (
-    <Sidebar>
-      <SidebarHeader className="text-xl font-bold px-4 py-4 ">
-        StockFlo
+    <Sidebar className="bg-slate-900 text-slate-200 ">
+      <SidebarHeader className="text-xl font-bold px-6 py-6 ">
+        StockFlow
       </SidebarHeader>
-      <SidebarContent className="flex ">
-        <SidebarGroup />
+      <SidebarContent >
+        <SidebarGroup >
         <SidebarMenu >
           {items.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton 
-                                                                            
+                                                                           
               isActive={pathname === item.href}>
-                <Link href={item.href}>
-                  <item.icon className="h-4 w-4" />
+                <Link href={item.href} className="flex items-center gap-4 w-full px-4">
+                  <item.icon className="h-5 w-full " />
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
-            </SidebarMenuItem>
+            </SidebarMenuItem> 
           ))}
         </SidebarMenu>
-        <SidebarGroup />
+        </SidebarGroup >
       </SidebarContent>
     </Sidebar>
   );
