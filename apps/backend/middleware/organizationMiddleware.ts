@@ -11,7 +11,7 @@ export const organizationMiddleware = (req: Request, res: Response, next: NextFu
         message: "Token not found",
       });
     }
-    const authHeader = token.startsWith("Bearer ") ? token.substring(7) : token;
+    const authHeader = token.startsWith("Bearer ") ?token.substring(7) : token;
     const decode = jwt.verify(
       authHeader,
       process.env.JWT_SECRET_TEMP!,

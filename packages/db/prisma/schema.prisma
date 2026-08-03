@@ -22,8 +22,7 @@ enum STATUS {
 model Organizations {
   id          String @id @default(uuid())
   name        String
-  phoneNumber String
-
+  phoneNumber String   @unique
   address   String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -42,9 +41,9 @@ model Organizations {
 model User {
   id             Int           @id @default(autoincrement())
   name           String
-  email          String
+  email          String         @unique
   password       String
-  role           Role
+  role           Role       @default(OWNER)
   organizationId String
   organization   Organizations @relation(fields: [organizationId], references: [id])
 }
@@ -52,8 +51,8 @@ model User {
 model Supplier {
   id             Int              @id @default(autoincrement())
   name           String
-  email          String?
-  phone          String
+  email          String?           @unique
+  phone          String            @unique
   address        String
   gstNumber      String
   organizationId String
