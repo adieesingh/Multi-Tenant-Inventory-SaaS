@@ -162,6 +162,7 @@ userRouter.post("/login", async (req, res) => {
       process.env.JWT_SECRET_LOGIN!,
       { expiresIn: "7d" },
     );
+    console.log(token)
     return res
       .status(201)
       .cookie("userToken", token, {
