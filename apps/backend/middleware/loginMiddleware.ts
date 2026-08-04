@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 
 export const LoginMiddleware =(req:Request,res:Response,next:NextFunction)=>{
         try {
-            const token = req.cookies.loginToken
+            const token = req.cookies.userToken
             if(!token){
                 return res.status(401).json({
                     messsage:"Token Not Found"
@@ -11,6 +11,7 @@ export const LoginMiddleware =(req:Request,res:Response,next:NextFunction)=>{
             }
             const authHeader = token.startsWith("Bearer ")?token.subString(7):token;
             const decode = jwt.verify(authHeader,process.env.JWT_SECRET_LOGIN!)
+            console.log(decode)
             if(decode){
                  next(); 
             }
