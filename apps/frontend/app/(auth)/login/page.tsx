@@ -28,10 +28,11 @@ export default function LoginPage() {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
         data,
+        {withCredentials:true}
       );
       if (response) {
         toast.success(response.data.message);
-        router.push("/dashboard");
+        router.push("/organization");
       }
       if (response.status == 400) {
         toast.error(response.data.message);
