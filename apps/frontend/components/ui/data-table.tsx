@@ -13,6 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "./table";
+import { useRouter } from "next/navigation";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -21,6 +23,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
   const table = useReactTable({
     data,
     columns,
@@ -57,7 +60,7 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell className="" key={cell.id}>
+                  <TableCell className="" key={cell.id} onClick={()=>router.push(`/dashboard/${organizationId}`)}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
