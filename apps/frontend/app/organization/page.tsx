@@ -4,11 +4,13 @@ import { DataTable } from "@/components/ui/data-table";
 import { ToolBar } from "@/components/ui/toolbar";
 
 import { getOrganization } from "@/service/organization";
-import { Button } from "@base-ui/react";
+import { useTableNavigation } from "@/service/routerhandler";
+
+
 
 export default async function Organization() {
   const organization = await getOrganization();
-
+  const {goTo} = useTableNavigation();
   return (
     <div className="min-h-screen bg-gray-50">
       <ToolBar></ToolBar>
@@ -28,7 +30,11 @@ export default async function Organization() {
         </div>
       </div>
       <div className="overflow-hidden shadow-sm rounded-xl bg-white border">
-      <DataTable columns={colunms} data={organization}></DataTable>
+      <DataTable columns={colunms} 
+     onRowClick={(organization)=>{
+        goTo(`/dashboard/${organization.id}`)
+     }}
+      data={organization}></DataTable>
       </div>
     </div>
   );
