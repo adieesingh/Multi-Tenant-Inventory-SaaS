@@ -1,4 +1,4 @@
-import { api } from "@/lib/axios";
+ import { api } from "@/lib/axios";
 import { cookies } from "next/headers";
 
 export async function getOrganization() {
