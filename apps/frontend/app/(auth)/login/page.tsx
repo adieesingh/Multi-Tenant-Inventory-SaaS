@@ -9,6 +9,7 @@ import { LoginForm, signinUser } from "@repo/common/validation";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { api } from "@/lib/axios";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,8 +26,7 @@ export default function LoginPage() {
   });
   const handleLogin = async (data: LoginForm) => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
+      const response = await api.post("/user/login",
         data,
         {withCredentials:true}
       );
