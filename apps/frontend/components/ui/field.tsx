@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-
+import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -224,7 +224,38 @@ function FieldError({
   )
 }
 
+interface InputFieldProps{
+  id:string,
+  label:string,
+  placeholder?:string,
+  disabled?:boolean,
+  type:string,
+  autoComplete?:string,
+ 
+  
+}
+
+
+function FieldInput({id,label,placeholder,disabled,type,autoComplete,...props}:InputFieldProps) {
+  return (
+    <Field>
+       <FieldLabel >{label}</FieldLabel>
+      <Input
+      id={id}
+      type={type}
+      placeholder={placeholder}
+      disabled={disabled}
+      autoComplete={autoComplete}
+      {...props}
+        
+      />
+     
+    </Field>
+  )
+}
+
 export {
+  FieldInput,
   Field,
   FieldLabel,
   FieldDescription,
