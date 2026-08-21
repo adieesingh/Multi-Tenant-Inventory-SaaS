@@ -28,7 +28,7 @@ model Organizations {
   updatedAt DateTime   @updatedAt
   user      User[]
   supplier  Supplier[]
-
+  organizationMembership OrganizationsMembership[]
   categories      Categories[]
   product         Products[]
   product_variant Product_Variants[]
@@ -46,6 +46,7 @@ model User {
   role           Role       @default(OWNER)
   organizationId String
   organization   Organizations @relation(fields: [organizationId], references: [id])
+  organizationMembership OrganizationsMembership[]
 }
 
 model Supplier {
@@ -164,7 +165,19 @@ model Stock_Movements {
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
 }
-
+model OrganizationsMembership{
+  id     String   @id @default(uuid())
+  role   Role   @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId     Int
+  user   User   @relation(fields: [userId], references: [id])
+  organizationId String
+  Organization   Organizations @relation(fields: [organizationId],references: [id])
+  @@unique([userId,organizationId])
+  @@index([userId])
+  @@index([organizationId])
+}
 enum Type {
   PURCHASE
   SALE
